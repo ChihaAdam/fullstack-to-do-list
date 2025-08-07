@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "@/lib/axiosInstances";
 import type { status, userCredentials } from "@/types/types";
-import Loading from "@/components/ui/Loading";
+import {Loading} from "@/components/ui/Loading";
 /*-----------------------------------types-------------------------------------------*/
 
 type AuthContextType =

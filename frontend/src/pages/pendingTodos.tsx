@@ -2,12 +2,18 @@ import { useFetchTodos } from "@/hooks/useFetch";
 import { Accordion } from "@/components/ui/accordion";
 import { useMemo } from "react";
 import TodoComponent from "@/components/Todo";
+import { Toaster } from "sonner";
+import AddTodo from "@/components/AddTodo";
+import { LoadingMinimal } from "@/components/ui/Loading";
 const PendingTodos = () => {
-  const { data } = useFetchTodos();
+  const { data ,status} = useFetchTodos();
   const pending = useMemo(() => {
     return [...data].filter((todo) => todo.completed === false);
   }, [data]);
+  if (status==='loading') return <LoadingMinimal />
   return (
+    <>
+    <Toaster  className="shadow-md text-lg"/>
     <Accordion
       type="single"
       collapsible
@@ -22,6 +28,8 @@ const PendingTodos = () => {
         <p className="text-center"> add your first todo</p>
       )}
     </Accordion>
+    <AddTodo />
+    </>
   );
 };
 

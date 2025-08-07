@@ -4,12 +4,16 @@ export type userCredentials = {
 };
 export type status = "idle" | "loading" | "success" | "error";
 export type Todo ={
-  _id: string; // ObjectId as string
+  _id: string;
   title: string;
   description: string;
   completed: boolean;
-  author: string; // ObjectId as string
+  author: string;
   createdAt: Date;
   updatedAt: Date;
   __v: number;
+}
+export type TodoToAdd={
+  title:string;
+  description:string
 }

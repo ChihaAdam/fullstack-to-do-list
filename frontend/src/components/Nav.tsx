@@ -44,7 +44,7 @@ function Nav() {
         </li>
       </ul>
       <DropdownMenu >
-        <DropdownMenuTrigger className="focus:outline-0">
+        <DropdownMenuTrigger className="focus:outline-0" asChild>
           <Button variant="outline">options</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">

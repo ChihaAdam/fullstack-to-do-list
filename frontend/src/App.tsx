@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedLogin, ProtectedRoute } from "./hooks/ProtectedRoute.tsx";
 import { lazy,Suspense } from "react";
-import Loading from "./components/ui/Loading.tsx";
+import {Loading} from "./components/ui/Loading.tsx";
 const Login = lazy(() => import("./pages/login.tsx"));
 const Signup = lazy(() => import("./pages/signup.tsx"));
 const CompletedTodos = lazy(() => import("./pages/completedTodos.tsx"));
