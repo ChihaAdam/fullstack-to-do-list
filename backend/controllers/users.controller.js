@@ -27,6 +27,7 @@ export const loginController = async (req, res, next) => {
     const refreshToken = generateRefreshToken(userInfo._id.valueOf());
     res.status(200).cookie("refreshToken", refreshToken, {
       httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
     res.json({
       message: "login success",
@@ -54,6 +55,7 @@ export const signupController = async (req, res, next) => {
       .status(201)
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .json({
         message: "username created successfully",

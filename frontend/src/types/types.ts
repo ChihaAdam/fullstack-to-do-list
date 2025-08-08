@@ -13,7 +13,7 @@ export type Todo ={
   updatedAt: Date;
   __v: number;
 }
-export type TodoToAdd={
+export type TodoRaw={
   title:string;
   description:string
 }

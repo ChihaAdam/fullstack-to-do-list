@@ -8,7 +8,7 @@ import type { userCredentials } from "@/types/types";
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 const Login = () => {
-  const {login,status}=useAuth()
+  const { login, status, error } = useAuth();
   const [isHidden, setIsHidden] = useState(true);
   const [credentials, setCredentials] = useState<userCredentials>({
     username: "",
@@ -26,7 +26,7 @@ const Login = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(credentials)
+    login(credentials);
   };
   return (
     <form
@@ -48,10 +48,25 @@ const Login = () => {
         type={isHidden ? "password" : "text"}
         onChange={handlePasswordChange}
       ></Input>
-      <Button type="submit" disabled={!isValid || status == "loading"} className="btn-gradiant">
+      <Button
+        type="submit"
+        disabled={!isValid || status == "loading"}
+        className="btn-gradiant"
+      >
         login
       </Button>
-        <div>Not regisred yet ? <Link to='/signup' className="underline font-semibold">signup</Link></div>
+      <div>
+        Not regisred yet ?{" "}
+        <Link to="/signup" className="underline font-semibold">
+          signup
+        </Link>
+      </div>
+      {error!=null && (
+        <Alert variant='destructive'>
+          <AlertCircle />
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
+      )}
     </form>
   );
 };

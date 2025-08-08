@@ -1,5 +1,4 @@
 import { ListTodo } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth.tsx";
 import {
   DropdownMenu,
@@ -8,11 +7,10 @@ import {
   DropdownMenuItem,
 } from './ui/dropdown-menu.tsx'
 import { Button } from "./ui/button";
-
+import { useNavigate } from "react-router-dom";
 function Nav() {
-  const navigate = useNavigate();
-  const location = useLocation();
   const route = location.pathname;
+  const navigate = useNavigate()
   const {signout}=useAuth();
   const toggleDarkmode=()=>document.documentElement.classList.toggle('dark')
   return (
@@ -28,7 +26,7 @@ function Nav() {
               ? "bg-white dark:bg-dark dark:bg-zinc-950 border-1 border-black/20 dark:border-white/20"
               : "hover:bg-zinc-200 dark:hover:bg-zinc-700 text-black/65 dark:text-white/75"
           }`}
-          onClick={() => navigate("/")}
+          onClick={() => navigate('/')}
         >
           pending
         </li>
@@ -38,7 +36,7 @@ function Nav() {
               ? "bg-white dark:bg-zinc-950 dark:bg-dark border-1 border-black/20 dark:border-white/20"
               : "hover:bg-zinc-200 dark:hover:bg-zinc-700 text-black/65 dark:text-white/75"
           }`}
-          onClick={() => navigate("/completed")}
+          onClick={() =>navigate('/completed')}
         >
           completed
         </li>

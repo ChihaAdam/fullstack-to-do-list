@@ -45,8 +45,7 @@ export const searchTodo = async (req, res, next) => {
 export const updateTodo = async (req, res, next) => {
   try {
     const userId = req.id;
-    const { id } = req.params;
-    const updates = req.body;
+    const {id,updates} = req.body;
     const updated = await Todo.findOneAndUpdate(
       {
         _id: id,
@@ -73,7 +72,7 @@ export const updateTodo = async (req, res, next) => {
 export const completeTodo = async (req, res, next) => {
   try {
     const userId = req.id;
-    const { id } = req.params;
+    const { id } = req.body;
     const updated = await Todo.findOneAndUpdate(
       {
         _id: id,
@@ -86,6 +85,27 @@ export const completeTodo = async (req, res, next) => {
       }
     );
     if (!updated) {
+      const err = new Error("document not found");
+      err.name = "DocumentNotFoundError";
+      throw err;
+    }
+    res.status(200).json({
+      message: "todo updated successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+export const deleteTodo = async (req, res, next) => {
+  try {
+    const userId = req.id;
+    const { id } = req.params;
+    const deleted = await Todo.findOneAndDelete(
+      {
+        _id: id,
+        author: userId,
+      });
+    if (!deleted) {
       const err = new Error("document not found");
       err.name = "DocumentNotFoundError";
       throw err;
