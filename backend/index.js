@@ -9,12 +9,8 @@ import todoRouter from "./routes/todo.route.js";
 import refreshRouter from "./routes/refresh.route.js";
 import { ErrorHandler } from "./middlewares/errorHandler.middleware.js";
 import cookieParser from "cookie-parser";
-import swaggerUi from 'swagger-ui-express'
-import { swaggerSpec } from "./swagger.js";
-
 const app = express();
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(dbConnection);
+
 app.use(morgan("dev"));
 app.use(cors({ origin: FRONTEND_URL, 
                credentials: true ,
@@ -26,4 +22,11 @@ app.use("/todos", todoRouter);
 app.use("/refresh", refreshRouter);
 app.use(ErrorHandler);
 
-export default app
+//start server
+app.listen(PORT, async () => {
+  console.log(
+    chalk.cyan.bold("server is listening on port ") +
+      chalk.bgCyan.white.bold(PORT)
+  );
+  await dbConnection();
+});

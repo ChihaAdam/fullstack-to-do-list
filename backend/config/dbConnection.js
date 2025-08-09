@@ -1,27 +1,14 @@
+import chalk from "chalk";
 import { DB_URI } from "./env.js";
 import mongoose from "mongoose";
-if (!DB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable');
+const dbConnection=async ()=>{
+    try{
+       await mongoose.connect(DB_URI);
+       console.log(chalk.green('db connection successful'))
+    }
+    catch(error){
+        console.error(chalk.red.bold('error connecting to database'))
+        process.exit(1)
+    }
 }
-
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
-async function dbConnection() {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(DB_URI, {
-      bufferCommands: false,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-  }
-
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
-export default dbConnection;
+export default dbConnection
