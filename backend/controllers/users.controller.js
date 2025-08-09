@@ -6,6 +6,7 @@ import {
   checkPassword,
   generateRefreshToken,
 } from "../utils/user.utils.js";
+import { IS_PRODUCTION } from "../config/env.js";
 
 //login controller
 export const loginController = async (req, res, next) => {
@@ -28,6 +29,8 @@ export const loginController = async (req, res, next) => {
     res.status(200).cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      secure: IS_PRODUCTION,
+      sameSite: IS_PRODUCTION ? "None" : "Lax",
     });
     res.json({
       message: "logged in successfully",
@@ -56,6 +59,8 @@ export const signupController = async (req, res, next) => {
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        secure: IS_PRODUCTION,
+        sameSite: IS_PRODUCTION ? "None" : "Lax",
       })
       .json({
         message: "user created successfully",
@@ -73,6 +78,8 @@ export const signoutController = (_req, res, _next) => {
     .status(200)
     .cookie("refreshToken", null, {
       httpOnly: true,
+      secure: IS_PRODUCTION,
+      sameSite: IS_PRODUCTION ? "None" : "Lax",
     })
     .json({
       message: "signed out successfully",
