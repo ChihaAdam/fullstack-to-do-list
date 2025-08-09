@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import type { userCredentials } from "@/types/types";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, Eye, EyeClosed } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 const Signup = () => {

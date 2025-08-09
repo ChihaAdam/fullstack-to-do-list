@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./useAuth";
+import { useAuth } from "@/context/AuthContext";
 import Nav from "@/components/Nav";
 import { TodosProvider } from "@/context/TodosContext";
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {

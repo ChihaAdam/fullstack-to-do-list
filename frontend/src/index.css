@@ -119,9 +119,17 @@
   body {
     @apply bg-background text-foreground;
   }
+  button{
+    @apply cursor-pointer
+  }
+  h3 {
+  flex:1
+}
+
 }
 @layer utilities {
   .btn-gradiant {
     @apply bg-gradient-to-r from-purple-600 to-pink-600 disabled:saturate-50 text-lg font-bold text-white cursor-pointer disabled:cursor-not-allowed py-2;
   }
 }
+

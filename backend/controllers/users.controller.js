@@ -30,7 +30,7 @@ export const loginController = async (req, res, next) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
     res.json({
-      message: "login success",
+      message: "logged in successfully",
       accessToken: Accesstoken,
     });
   } catch (err) {
@@ -58,7 +58,7 @@ export const signupController = async (req, res, next) => {
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .json({
-        message: "username created successfully",
+        message: "user created successfully",
         accesstoken: accesstoken,
       });
   } catch (err) {

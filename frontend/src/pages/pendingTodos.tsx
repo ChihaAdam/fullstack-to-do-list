@@ -1,7 +1,6 @@
 import { Accordion } from "@/components/ui/accordion";
 import { useMemo } from "react";
 import TodoComponent from "@/components/TodoPending/Todo";
-import { Toaster } from "sonner";
 import AddTodo from "@/components/AddTodo";
 import { LoadingMinimal } from "@/components/ui/Loading";
 import { useTodos } from "@/context/TodosContext";
@@ -13,7 +12,6 @@ const PendingTodos = () => {
   if (status==='loading') return <LoadingMinimal />
   return (
     <>
-    <Toaster  className="shadow-md text-lg"/>
     <Accordion
       type="single"
       collapsible

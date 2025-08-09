@@ -1,6 +1,8 @@
-import { useAuth } from "./useAuth";
+import { useAuth } from "@/context/AuthContext";
+import { useTodos } from "@/context/TodosContext";
 import { api } from "@/lib/axiosInstances.ts";
 import type { TodoRaw } from "@/types/types";
+import { toast } from "sonner";
 export const useAddTodo = (fetchTodos: () => Promise<void>) => {
   const { token, setToken } = useAuth();
   async function addTodo(todoToAdd: TodoRaw) {
@@ -10,16 +12,23 @@ export const useAddTodo = (fetchTodos: () => Promise<void>) => {
           Authorization: token,
         },
       });
+      toast('todo has been created .');
       await fetchTodos();
+      
     } catch (err: any) {
       const status = err.response?.status;
       if (status === 401) setToken(null);
+      toast("something went wrong", {
+        description: "Please try again.",
+        className: "bg-red-600 text-white border border-red-700",
+      });
     }
   }
   return { addTodo };
 };
-export const useUpdateTodo = (id: string, fetchTodos: () => Promise<void>) => {
+export const useUpdateTodo = (id: string) => {
   const { token, setToken } = useAuth();
+  const { fetchTodos } = useTodos();
   async function updateTodo(todoToUpdate: TodoRaw) {
     try {
       await api.patch(
@@ -31,19 +40,22 @@ export const useUpdateTodo = (id: string, fetchTodos: () => Promise<void>) => {
           },
         }
       );
+      toast("todo updated successfully");
       await fetchTodos();
     } catch (err: any) {
       const status = err.response?.status;
       if (status === 401) setToken(null);
+      toast("something went wrong", {
+        description: "Please try again.",
+        className: "bg-red-600 text-white border border-red-700",
+      });
     }
   }
   return { updateTodo };
 };
-export const useCompleteTodo = (
-  id: string,
-  fetchTodos: () => Promise<void>
-) => {
+export const useCompleteTodo = (id: string) => {
   const { token, setToken } = useAuth();
+  const { fetchTodos } = useTodos();
   async function completeTodo() {
     try {
       await api.patch(
@@ -55,11 +67,39 @@ export const useCompleteTodo = (
           },
         }
       );
+      toast("todo completed successfully");
       await fetchTodos();
     } catch (err: any) {
       const status = err.response?.status;
       if (status === 401) setToken(null);
+      toast("something went wrong", {
+        description: "Please try again.",
+        className: "bg-red-600 text-white border border-red-700",
+      });
     }
   }
   return { completeTodo };
+};
+export const useDeleteTodo = (id: string) => {
+  const { token, setToken } = useAuth();
+  const { fetchTodos } = useTodos();
+  async function deleteTodo() {
+    try {
+      await api.delete(`/todos/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      toast("deleted successfully");
+      await fetchTodos();
+    } catch (err: any) {
+      const status = err.response?.status;
+      if (status === 401) setToken(null);
+      toast("something went wrong", {
+        description: "Please try again.",
+        className: "bg-red-600 text-white border border-red-700",
+      });
+    }
+  }
+  return { deleteTodo };
 };

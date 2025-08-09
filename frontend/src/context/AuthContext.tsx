@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "@/lib/axiosInstances";
 import type { status, userCredentials } from "@/types/types";
 import { Loading } from "@/components/ui/Loading";
@@ -19,7 +19,7 @@ type AuthProviderType = {
   children?: React.ReactNode;
 };
 /*----------------------------------------------------------------------------------*/
-export const AuthContext = createContext<AuthContextType>(undefined);
+const AuthContext = createContext<AuthContextType>(undefined);
 const errors: Record<number, string> = {
   401: "incorrect username or password",
   409: "username already exists",
@@ -88,4 +88,9 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       {children}
     </AuthContext.Provider>
   );
+};
+export const useAuth = () => {
+  const authContext = useContext(AuthContext);
+  if (!authContext) throw new Error("no auth context provided");
+  return authContext
 };

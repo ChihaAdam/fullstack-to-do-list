@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/axiosInstances";
 import type { status, Todo } from "@/types/types";
 import { createContext, useContext, useEffect, useState } from "react";

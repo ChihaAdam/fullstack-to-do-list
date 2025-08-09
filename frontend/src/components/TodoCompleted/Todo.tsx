@@ -5,28 +5,31 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { format } from "date-fns";
+import { useDeleteTodo } from "@/hooks/useFetch";
+import  Delete  from "./Delete.tsx"
+import { Textarea } from "../ui/textarea.tsx";
 type TodoTypes = {
   todo: Todo;
   index: number;
 };
 function TodoComponent({ todo, index }: TodoTypes) {
+  const {} = useDeleteTodo(todo._id);
   return (
- <AccordionItem
+    <AccordionItem
       value={`Item-${index}`}
       key={todo._id}
       className=" hover:bg-zinc-100 dark:hover:bg-zinc-800 px-2"
     >
-      <AccordionTrigger>
-        <div className="flex justify-between w-full">
-          <span>
-            {index + 1 + ")  "} {todo.title}
-          </span>
-        </div>
-      </AccordionTrigger>
-      <AccordionContent>
-        <div>
+      <div className="flex justify-between items-center w-full gap-2">
+        <AccordionTrigger className="flex-1">
+          {`${index+1}) ${todo.title}`}
+        </AccordionTrigger>
+        <Delete id={todo._id}></Delete>
+      </div>
+      <AccordionContent className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <span className="opacity-75 font-bold">Description :</span>
-          {todo.description}
+          <Textarea readOnly className="resize-none" value={todo.description}></Textarea>
         </div>
         <div>
           <span className="opacity-75 font-bold">created at :</span>

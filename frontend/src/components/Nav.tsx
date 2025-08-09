@@ -1,5 +1,5 @@
 import { ListTodo } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth.tsx";
+import { useAuth } from "@/context/AuthContext.tsx";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -8,14 +8,17 @@ import {
 } from './ui/dropdown-menu.tsx'
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
+import { Toaster } from "sonner";
 function Nav() {
   const route = location.pathname;
   const navigate = useNavigate()
   const {signout}=useAuth();
   const toggleDarkmode=()=>document.documentElement.classList.toggle('dark')
   return (
-    <div className="w-screen p-4 bg-zinc-100 dark:bg-zinc-800 flex justify-between shadow-sm shadow-zinc-500 dark:shadow-zinc-900 select-none">
-      <div className="flex gap-2 w-fit items-center">
+    <>
+    <div className="w-screen p-4 bg-zinc-100 dark:bg-zinc-800 flex justify-between shadow-sm shadow-zinc-500 dark:shadow-zinc-900 select-none items-center max-md:flex-wrap gap-4">
+          
+      <div className="flex gap-2 max-md:justify-center max-md:w-full w-fit items-center">
         <ListTodo className="size-8" />
         <h1 className="text-4xl font-bold">Todo List</h1>
       </div>
@@ -46,11 +49,13 @@ function Nav() {
           <Button variant="outline">options</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
-          <DropdownMenuItem onClick={toggleDarkmode}>toggle darkmode</DropdownMenuItem>
-          <DropdownMenuItem onClick={signout}>sign out</DropdownMenuItem>
+          <DropdownMenuItem className="hover:bg-black/5 dark:hover:bg-white/5" onClick={toggleDarkmode}>toggle darkmode</DropdownMenuItem>
+          <DropdownMenuItem className="hover:bg-black/5 dark:hover:bg-white/5" onClick={signout}>sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
+    <Toaster  className="shadow-md text-lg"/>
+    </>
   );
 }
 

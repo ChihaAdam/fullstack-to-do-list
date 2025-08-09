@@ -1,7 +1,6 @@
 import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
 import { Label } from "./ui/label";
-import { toast } from "sonner";
 import {
   Dialog,
   DialogClose,
@@ -30,7 +29,7 @@ function AddTodo({fetchTodos}:{fetchTodos:()=>Promise<void>}) {
   }
   const handleSubmit=async ()=>{
     await addTodo(todo);
-    toast('todo has been created .')
+    setTodo({title:'',description:''})
   }
   return (
     <Dialog>
@@ -48,15 +47,15 @@ function AddTodo({fetchTodos}:{fetchTodos:()=>Promise<void>}) {
           <Label htmlFor="title">title</Label>
           <Input id="title" onChange={handleTitleChange}></Input>
           <div className={titleLength>50?'text-red-600':''}>{titleLength}/50</div>
-          <Label htmlFor="description">title</Label>
-          <Textarea className="resize-none" id="description" onChange={handleDescriptionChange}></Textarea>
+          <Label htmlFor="description">description</Label>
+          <Textarea rows={4}  className="resize-none field-sizing-fixed"  id="description" onChange={handleDescriptionChange}></Textarea>
           <div className={descriptionLength>500?'text-red-600':''}>{descriptionLength}/500</div>
         </DialogHeader>
-        <DialogFooter>
-          <DialogClose>
+        <DialogFooter className="max-sm:flex max-sm:w-full max-sm:flex-col">
+          <DialogClose asChild>
             <Button variant="secondary">Cancel</Button>
           </DialogClose>
-          <DialogClose>
+          <DialogClose asChild>
             <Button disabled={!isValid} onClick={handleSubmit}>add</Button>
           </DialogClose>
         </DialogFooter>
