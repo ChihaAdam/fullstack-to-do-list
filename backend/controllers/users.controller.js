@@ -12,7 +12,7 @@ import { dbConnection } from "../config/dbConnection.js";
 //login controller
 export const loginController = async (req, res, next) => {
   try {
-    await dbConnection()
+    await dbConnection();
     const { username, password } = req.body;
     const userInfo = await User.findOne({ username: username });
     if (!userInfo) {
@@ -48,7 +48,7 @@ export const signupController = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
-    await dbConnection()
+    await dbConnection();
     const { username, password } = req.body;
     const hashedUser = await hashUser(username, password);
     const newUser = await User.create([hashedUser], { session });
@@ -79,8 +79,12 @@ export const signupController = async (req, res, next) => {
 export const signoutController = (_req, res, _next) => {
   res
     .status(200)
-    .cookie("refreshToken", null, {
+    .cookie("refreshToken", "", {
       httpOnly: true,
+      expires: new Date(0),
+      secure: IS_PRODUCTION,
+      sameSite: IS_PRODUCTION ? "None" : "Lax",
+      F,
     })
     .json({
       message: "signed out successfully",
