@@ -81,8 +81,6 @@ export const signoutController = (_req, res, _next) => {
     .status(200)
     .cookie("refreshToken", null, {
       httpOnly: true,
-      secure: IS_PRODUCTION,
-      sameSite: IS_PRODUCTION ? "None" : "Lax",
     })
     .json({
       message: "signed out successfully",
