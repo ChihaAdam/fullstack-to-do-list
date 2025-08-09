@@ -5,8 +5,8 @@ import { Label } from "@radix-ui/react-label";
 import { AlertCircle, Eye, EyeClosed } from "lucide-react";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import type { userCredentials } from "@/types/types";
-import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 const Login = () => {
   const { login, status, error } = useAuth();
   const [isHidden, setIsHidden] = useState(true);

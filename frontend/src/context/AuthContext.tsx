@@ -19,7 +19,7 @@ type AuthProviderType = {
   children?: React.ReactNode;
 };
 /*----------------------------------------------------------------------------------*/
-const AuthContext = createContext<AuthContextType>(undefined);
+export const AuthContext = createContext<AuthContextType>(undefined);
 const errors: Record<number, string> = {
   401: "incorrect username or password",
   409: "username already exists",
