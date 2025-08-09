@@ -12,7 +12,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 app.use(morgan("dev"));
-app.use(cors({ origin: FRONTEND_URL, 
+app.use(cors({ origin: '*', 
                credentials: true ,
               }));
 app.use(express.json());
