@@ -12,17 +12,16 @@ import cookieParser from "cookie-parser";
 const app = express();
 app.use(morgan("dev"));
 
-const allowedOrigin = "https://fullstack-to-do-list-2w75.vercel.app";
 
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin:FRONTEND_URL,
     credentials: true,
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.options("*", cors());
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/users", usersRouter);
