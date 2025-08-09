@@ -25,12 +25,3 @@ app.use("/users", usersRouter);
 app.use("/todos", todoRouter);
 app.use("/refresh", refreshRouter);
 app.use(ErrorHandler);
-
-//start server
-app.listen(PORT, async () => {
-  console.log(
-    chalk.cyan.bold("server is listening on port ") +
-      chalk.bgCyan.white.bold(PORT)
-  );
-  await dbConnection();
-});
