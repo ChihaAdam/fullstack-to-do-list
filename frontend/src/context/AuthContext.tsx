@@ -92,5 +92,5 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
 export const useAuth = () => {
   const authContext = useContext(AuthContext);
   if (!authContext) throw new Error("no auth context provided");
-  return authContext
+  return authContext;
 };

@@ -79,12 +79,12 @@ export const signupController = async (req, res, next) => {
 export const signoutController = (_req, res, _next) => {
   res
     .status(200)
-    .cookie("refreshToken", "", {
+    .clearCookie("refreshToken", {
       httpOnly: true,
-      expires: new Date(0),
       secure: IS_PRODUCTION,
       sameSite: IS_PRODUCTION ? "None" : "Lax",
     })
+
     .json({
       message: "signed out successfully",
     });
