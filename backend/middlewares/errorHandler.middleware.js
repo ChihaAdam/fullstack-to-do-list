@@ -32,7 +32,7 @@ export const ErrorHandler = (err, _, res, next) => {
       case "wrongLoginInfoError":
         res.status(401).json({ message: "incorrect username or password" });
         break;
-
+      
       default:
         console.error(err);
         console.table(err);

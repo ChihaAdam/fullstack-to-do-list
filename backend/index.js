@@ -9,21 +9,18 @@ import todoRouter from "./routes/todo.route.js";
 import refreshRouter from "./routes/refresh.route.js";
 import { ErrorHandler } from "./middlewares/errorHandler.middleware.js";
 import cookieParser from "cookie-parser";
-import { dbConnectionServerlessMiddleware } from "./middlewares/dbConnectionServerless.middleware.js";
 const app = express();
 
 app.use(morgan("dev"));
 app.use(cors({ origin: FRONTEND_URL, 
                credentials: true ,
               }));
-if (IS_PRODUCTION) app.use(dbConnectionServerlessMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/users", usersRouter);
 app.use("/todos", todoRouter);
 app.use("/refresh", refreshRouter);
 app.use(ErrorHandler);
-
 
 if (!IS_PRODUCTION){
   //start server
@@ -32,7 +29,7 @@ if (!IS_PRODUCTION){
     chalk.cyan.bold("server is listening on port ") +
       chalk.bgCyan.white.bold(PORT)
   );
-  await dbConnection();
+  await dbConnection()
 });
 }
 export default app;

@@ -1,4 +1,5 @@
 import Todo from "../model/todo.model.js";
+import { dbConnection } from "../config/dbConnection.js";
 //addtodo controller
 export const addTodo = async (req, res, next) => {
   try {
@@ -16,6 +17,7 @@ export const addTodo = async (req, res, next) => {
 //get all todos controller
 export const getTodos = async (req, res, next) => {
   try {
+    await dbConnection();
     const id = req.id;
     const todos = await Todo.find({ author: id });
     const formattedTodos = todos.map((todo) => ({
@@ -31,6 +33,7 @@ export const getTodos = async (req, res, next) => {
 };
 export const searchTodo = async (req, res, next) => {
   try {
+    await dbConnection()
     const id = req.id;
     const { searchTerm } = req.query;
     const regexSearchTerm = new RegExp("^" + searchTerm);
@@ -44,8 +47,9 @@ export const searchTodo = async (req, res, next) => {
 };
 export const updateTodo = async (req, res, next) => {
   try {
+    await dbConnection();
     const userId = req.id;
-    const {id,updates} = req.body;
+    const { id, updates } = req.body;
     const updated = await Todo.findOneAndUpdate(
       {
         _id: id,
@@ -71,6 +75,7 @@ export const updateTodo = async (req, res, next) => {
 };
 export const completeTodo = async (req, res, next) => {
   try {
+    await dbConnection();
     const userId = req.id;
     const { id } = req.body;
     const updated = await Todo.findOneAndUpdate(
@@ -98,13 +103,13 @@ export const completeTodo = async (req, res, next) => {
 };
 export const deleteTodo = async (req, res, next) => {
   try {
+    await dbConnection();
     const userId = req.id;
     const { id } = req.params;
-    const deleted = await Todo.findOneAndDelete(
-      {
-        _id: id,
-        author: userId,
-      });
+    const deleted = await Todo.findOneAndDelete({
+      _id: id,
+      author: userId,
+    });
     if (!deleted) {
       const err = new Error("document not found");
       err.name = "DocumentNotFoundError";

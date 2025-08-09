@@ -7,10 +7,12 @@ import {
   generateRefreshToken,
 } from "../utils/user.utils.js";
 import { IS_PRODUCTION } from "../config/env.js";
+import { dbConnection } from "../config/dbConnection.js";
 
 //login controller
 export const loginController = async (req, res, next) => {
   try {
+    await dbConnection()
     const { username, password } = req.body;
     const userInfo = await User.findOne({ username: username });
     if (!userInfo) {
@@ -46,6 +48,7 @@ export const signupController = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
+    await dbConnection()
     const { username, password } = req.body;
     const hashedUser = await hashUser(username, password);
     const newUser = await User.create([hashedUser], { session });
