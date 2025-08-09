@@ -1,15 +1,27 @@
 import { DB_URI } from "./env.js";
 import mongoose from "mongoose";
-const dbConnection = async () => {
-  let cached = null;
-  if (cached) return cached;
+if (!DB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable');
+}
 
-  try {
-    const connection = await mongoose.connect(DB_URI);
-    cached = connection;
-    return connection;
-  } catch (error) {
-    process.exit(1);
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function dbConnection() {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(DB_URI, {
+      bufferCommands: false,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   }
-};
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
 export default dbConnection;
