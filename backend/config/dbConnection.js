@@ -1,14 +1,15 @@
-import chalk from "chalk";
 import { DB_URI } from "./env.js";
 import mongoose from "mongoose";
-const dbConnection=async ()=>{
-    try{
-       await mongoose.connect(DB_URI);
-       console.log(chalk.green('db connection successful'))
-    }
-    catch(error){
-        console.error(chalk.red.bold('error connecting to database'))
-        process.exit(1)
-    }
-}
-export default dbConnection
+const dbConnection = async () => {
+  let cached = null;
+  if (cached) return cached;
+
+  try {
+    const connection = await mongoose.connect(DB_URI);
+    cached = connection;
+    return connection;
+  } catch (error) {
+    process.exit(1);
+  }
+};
+export default dbConnection;

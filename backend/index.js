@@ -14,7 +14,7 @@ import { swaggerSpec } from "./swagger.js";
 
 const app = express();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.use(dbConnection);
 app.use(morgan("dev"));
 app.use(cors({ origin: FRONTEND_URL, 
                credentials: true ,
