@@ -84,7 +84,6 @@ export const signoutController = (_req, res, _next) => {
       expires: new Date(0),
       secure: IS_PRODUCTION,
       sameSite: IS_PRODUCTION ? "None" : "Lax",
-      F,
     })
     .json({
       message: "signed out successfully",
