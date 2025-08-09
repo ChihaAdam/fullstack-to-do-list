@@ -1,4 +1,4 @@
-import { FRONTEND_URL } from "../config/env";
+import { FRONTEND_URL } from "../config/env.js";
 
 export default function corsHandler(req, res, next) {
   const allowedOrigin = FRONTEND_URL;
