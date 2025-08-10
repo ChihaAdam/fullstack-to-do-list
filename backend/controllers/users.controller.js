@@ -45,9 +45,10 @@ export const loginController = async (req, res, next) => {
 
 //signup controller
 export const signupController = async (req, res, next) => {
+  let session;
   try {
     await dbConnection();
-    const session = await mongoose.startSession();
+    session = await mongoose.startSession();
     session.startTransaction();
     const { username, password } = req.body;
     const hashedUser = await hashUser(username, password);
