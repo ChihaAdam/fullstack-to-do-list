@@ -45,10 +45,10 @@ export const loginController = async (req, res, next) => {
 
 //signup controller
 export const signupController = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
   try {
     await dbConnection();
+    const session = await mongoose.startSession();
+    session.startTransaction();
     const { username, password } = req.body;
     const hashedUser = await hashUser(username, password);
     const newUser = await User.create([hashedUser], { session });
@@ -79,11 +79,11 @@ export const signupController = async (req, res, next) => {
 export const signoutController = (_req, res, _next) => {
   res
     .status(200)
-    .cookie("refreshToken",null, {
+    .cookie("refreshToken", null, {
       httpOnly: true,
       maxAge: 0,
       secure: IS_PRODUCTION,
-      sameSite: IS_PRODUCTION ? "None" : "Lax"
+      sameSite: IS_PRODUCTION ? "None" : "Lax",
     })
     .json({
       message: "signed out successfully",
