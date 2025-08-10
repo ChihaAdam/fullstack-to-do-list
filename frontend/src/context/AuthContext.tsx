@@ -28,7 +28,6 @@ const errors: Record<number, string> = {
 export const AuthProvider = ({ children }: AuthProviderType) => {
   const [token, setToken] = useState<string | null>(null);
   const [status, setStatus] = useState<status>("idle");
-  const [isSigningOut, setIsSigningOut] = useState(false);
   const [checkTokenStatus, setCheckTokenStatus] = useState<"idle" | "loading">(
     "loading"
   );
@@ -43,7 +42,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       }
       setCheckTokenStatus("idle");
     }
-    if (!token && !isSigningOut) refreshToken();
+    if (!token) refreshToken();
   }, [token]);
   const login = async (credentials: userCredentials) => {
     try {
@@ -63,7 +62,6 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       setStatus("loading");
       await api.get("/users/signout");
       setStatus("success");
-      setIsSigningOut(true);
       setToken(null);
     } catch (err) {
       setStatus("error");
