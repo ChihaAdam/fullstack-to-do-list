@@ -30,9 +30,10 @@ const Login = () => {
   };
   return (
     <form
-      className="flex flex-col gap-4 my-8 max-w-xl mx-auto"
+      className="flex flex-col gap-4 my-8 max-w-xl mx-auto border-1 border-black/5 border-r-black/20 border-b-black/20  px-4 py-8 w-11/12 shadow-xl"
       onSubmit={handleSubmit}
     >
+      <h1 className="text-3xl font-bold text-gradiant">welcome back!</h1>
       <Label htmlFor="username">username</Label>
       <Input id="username" onChange={handleUsernameChange}></Input>
       <div className="flex justify-between">

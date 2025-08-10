@@ -131,5 +131,8 @@
   .btn-gradiant {
     @apply bg-gradient-to-r from-purple-600 to-pink-600 disabled:saturate-50 text-lg font-bold text-white cursor-pointer disabled:cursor-not-allowed py-2;
   }
+  .text-gradiant{
+    @apply bg-gradient-to-r from-purple-600 to-pink-600 disabled:saturate-50 font-bold text-transparent bg-clip-text;
+  }
 }
 
