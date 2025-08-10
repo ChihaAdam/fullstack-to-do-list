@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { PORT, FRONTEND_URL, IS_PRODUCTION } from "./config/env.js";
+import { PORT, FRONTEND_URL, IS_PRODUCTION, FRONTEND_URL_DEV } from "./config/env.js";
 import chalk from "chalk";
 import morgan from "morgan";
 import { dbConnection } from "./config/dbConnection.js";
@@ -11,10 +11,10 @@ import { ErrorHandler } from "./middlewares/errorHandler.middleware.js";
 import cookieParser from "cookie-parser";
 const app = express();
 app.use(morgan("dev"));
-
+const origin=IS_PRODUCTION?FRONTEND_URL:FRONTEND_URL_DEV
 app.use(
   cors({
-    origin:FRONTEND_URL,
+    origin:origin,
     credentials: true,
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
