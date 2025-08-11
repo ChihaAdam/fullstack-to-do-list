@@ -3,7 +3,7 @@ import {
   loginController,
   signoutController,
   signupController,
-} from "../controllers/users.controller.js";
+} from "../controllers/users/users.controller.js";
 const usersRouter = Router();
 /**
  * @swagger

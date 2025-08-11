@@ -1,4 +1,4 @@
-import { verifyRefreshToken,generateAccessToken } from "../utils/user.utils.js";
+import { verifyRefreshToken,generateAccessToken } from "../../utils/user.utils.js";
 
 export function refreshToken(req, res, next) {
   try {

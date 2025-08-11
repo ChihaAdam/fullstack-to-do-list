@@ -1,14 +1,13 @@
 import mongoose from "mongoose";
-import User from "../model/user.model.js";
+import User from "../../model/user.model.js";
 import {
   hashUser,
   generateAccessToken,
   checkPassword,
   generateRefreshToken,
-} from "../utils/user.utils.js";
-import { IS_PRODUCTION } from "../config/env.js";
-import { dbConnection } from "../config/dbConnection.js";
-
+} from "../../utils/user.utils.js";
+import { dbConnection } from "../../config/dbConnection.js";
+import { IS_PRODUCTION } from "../../config/env.js";
 //login controller
 export const loginController = async (req, res, next) => {
   try {
@@ -48,16 +47,12 @@ export const signupController = async (req, res, next) => {
   let session;
   try {
     await dbConnection();
-    session = await mongoose.startSession();
-    session.startTransaction();
     const { username, password } = req.body;
     const hashedUser = await hashUser(username, password);
-    const newUser = await User.create([hashedUser], { session });
-    const id = newUser[0]._id.valueOf();
+    const newUser = await User.create(hashedUser);
+    const id = newUser._id.valueOf();
     const accesstoken = generateAccessToken(id);
     const refreshToken = generateRefreshToken(id);
-    await session.commitTransaction();
-    session.endSession();
     res
       .status(201)
       .cookie("refreshToken", refreshToken, {
@@ -68,11 +63,9 @@ export const signupController = async (req, res, next) => {
       })
       .json({
         message: "user created successfully",
-        accesstoken: accesstoken,
+        accessToken: accesstoken,
       });
   } catch (err) {
-    await session.abortTransaction();
-    session.endSession();
     next(err);
   }
 };

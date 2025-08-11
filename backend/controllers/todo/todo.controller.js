@@ -1,5 +1,5 @@
-import Todo from "../model/todo.model.js";
-import { dbConnection } from "../config/dbConnection.js";
+import Todo from "../../model/todo.model.js";
+import { dbConnection } from "../../config/dbConnection.js";
 //addtodo controller
 export const addTodo = async (req, res, next) => {
   try {
