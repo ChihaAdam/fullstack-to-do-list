@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import User from "../../model/user.model.js";
 import {
   hashUser,
@@ -72,12 +71,27 @@ export const signupController = async (req, res, next) => {
 export const signoutController = (_req, res, _next) => {
   res
     .status(200)
-    .clearCookie("refreshToken",{
-        httpOnly: IS_PRODUCTION,
-        secure: IS_PRODUCTION,
-        sameSite: IS_PRODUCTION ? "None" : "Lax",
-      })
+    .clearCookie("refreshToken", {
+      httpOnly: IS_PRODUCTION,
+      secure: IS_PRODUCTION,
+      sameSite: IS_PRODUCTION ? "None" : "Lax",
+    })
     .json({
       message: "signed out successfully",
     });
+};
+export const deleteUserController = async (req, res, next) => {
+  const id = req.id;
+  try {
+    await User.findOneAndDelete({ _id: id });
+    res.status(200).clearCookie("refreshToken", {
+      httpOnly: IS_PRODUCTION,
+      secure: IS_PRODUCTION,
+      sameSite: IS_PRODUCTION ? "None" : "Lax",
+    })    .json({
+      message: "user removed successfull",
+    });;
+  } catch (err) {
+    next(err);
+  }
 };

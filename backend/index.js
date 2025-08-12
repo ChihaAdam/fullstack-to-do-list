@@ -1,6 +1,11 @@
 import express from "express";
 import cors from "cors";
-import { PORT, FRONTEND_URL, IS_PRODUCTION, FRONTEND_URL_DEV } from "./config/env.js";
+import {
+  PORT,
+  FRONTEND_URL,
+  IS_PRODUCTION,
+  FRONTEND_URL_DEV,
+} from "./config/env.js";
 import chalk from "chalk";
 import morgan from "morgan";
 import { dbConnection } from "./config/dbConnection.js";
@@ -9,17 +14,20 @@ import todoRouter from "./routes/todo.route.js";
 import refreshRouter from "./routes/refresh.route.js";
 import { ErrorHandler } from "./middlewares/errorHandler.middleware.js";
 import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./docs/swagger.js";
 const app = express();
 
-const origin=IS_PRODUCTION?FRONTEND_URL:FRONTEND_URL_DEV
+const origin = IS_PRODUCTION ? FRONTEND_URL : FRONTEND_URL_DEV;
 app.use(
   cors({
-    origin:origin,
+    origin: origin,
     credentials: true,
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
