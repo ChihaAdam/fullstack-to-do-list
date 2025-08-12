@@ -4,12 +4,12 @@ import { dbConnection } from "../../config/dbConnection.js";
 export const addTodo = async (req, res, next) => {
   try {
     const id = req.id;
-    await Todo.create({
+    const todo=await Todo.create({
       title: req.body.title,
       description: req.body.description ?? "",
       author: id,
     });
-    res.status(201).json({ message: "todo created successfully" });
+    res.status(201).json({ message: "todo created successfully",id: todo._id.valueOf() });
   } catch (err) {
     next(err);
   }
@@ -96,6 +96,7 @@ export const completeTodo = async (req, res, next) => {
     }
     res.status(200).json({
       message: "todo updated successfully",
+      id: updated._id.valueOf(),
     });
   } catch (err) {
     next(err);
@@ -116,7 +117,8 @@ export const deleteTodo = async (req, res, next) => {
       throw err;
     }
     res.status(200).json({
-      message: "todo updated successfully",
+      message: "todo deleted successfully",
+      id: deleted._id.valueOf(),
     });
   } catch (err) {
     next(err);
