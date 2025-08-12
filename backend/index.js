@@ -10,7 +10,7 @@ import refreshRouter from "./routes/refresh.route.js";
 import { ErrorHandler } from "./middlewares/errorHandler.middleware.js";
 import cookieParser from "cookie-parser";
 const app = express();
-app.use(morgan("dev"));
+
 const origin=IS_PRODUCTION?FRONTEND_URL:FRONTEND_URL_DEV
 app.use(
   cors({
@@ -20,7 +20,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/users", usersRouter);

@@ -28,7 +28,7 @@ export const loginController = async (req, res, next) => {
     const Accesstoken = generateAccessToken(userInfo._id.valueOf());
     const refreshToken = generateRefreshToken(userInfo._id.valueOf());
     res.status(200).cookie("refreshToken", refreshToken, {
-      httpOnly: true,
+      httpOnly: IS_PRODUCTION,
       maxAge: 30 * 24 * 60 * 60 * 1000,
       secure: IS_PRODUCTION,
       sameSite: IS_PRODUCTION ? "None" : "Lax",
@@ -44,7 +44,6 @@ export const loginController = async (req, res, next) => {
 
 //signup controller
 export const signupController = async (req, res, next) => {
-  let session;
   try {
     await dbConnection();
     const { username, password } = req.body;
@@ -56,7 +55,7 @@ export const signupController = async (req, res, next) => {
     res
       .status(201)
       .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
+        httpOnly: IS_PRODUCTION,
         maxAge: 30 * 24 * 60 * 60 * 1000,
         secure: IS_PRODUCTION,
         sameSite: IS_PRODUCTION ? "None" : "Lax",
@@ -74,7 +73,7 @@ export const signoutController = (_req, res, _next) => {
   res
     .status(200)
     .clearCookie("refreshToken",{
-        httpOnly: true,
+        httpOnly: IS_PRODUCTION,
         secure: IS_PRODUCTION,
         sameSite: IS_PRODUCTION ? "None" : "Lax",
       })
