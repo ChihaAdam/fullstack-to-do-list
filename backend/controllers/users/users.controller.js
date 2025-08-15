@@ -1,4 +1,5 @@
 import User from "../../model/user.model.js";
+import Todo from "../../model/todo.model.js";
 import {
   hashUser,
   generateAccessToken,
@@ -7,6 +8,7 @@ import {
 } from "../../utils/user.utils.js";
 import { dbConnection } from "../../config/dbConnection.js";
 import { IS_PRODUCTION } from "../../config/env.js";
+import bcrypt from "bcrypt";
 //login controller
 export const loginController = async (req, res, next) => {
   try {
@@ -67,7 +69,7 @@ export const signupController = async (req, res, next) => {
     next(err);
   }
 };
-
+//signout controller
 export const signoutController = (_req, res, _next) => {
   res
     .status(200)
@@ -80,17 +82,75 @@ export const signoutController = (_req, res, _next) => {
       message: "signed out successfully",
     });
 };
+//delete user controller
 export const deleteUserController = async (req, res, next) => {
   const id = req.id;
   try {
     await User.findOneAndDelete({ _id: id });
-    res.status(200).clearCookie("refreshToken", {
-      httpOnly: IS_PRODUCTION,
-      secure: IS_PRODUCTION,
-      sameSite: IS_PRODUCTION ? "None" : "Lax",
-    })    .json({
-      message: "user removed successfull",
-    });;
+    await Todo.deleteMany({ author: id });
+    res
+      .status(200)
+      .clearCookie("refreshToken", {
+        httpOnly: IS_PRODUCTION,
+        secure: IS_PRODUCTION,
+        sameSite: IS_PRODUCTION ? "None" : "Lax",
+      })
+      .json({
+        message: "user removed successfull",
+        id: id,
+      });
+  } catch (err) {
+    next(err);
+  }
+};
+export const updateUserController = async (req, res, next) => {
+  try {
+    await dbConnection();
+    const id = req.id;
+    let newInfo = req.body;
+    if (newInfo.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newInfo.password, salt);
+      newInfo = { ...newInfo, password: hashedPassword };
+    }
+    const updated = await User.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      { $set: newInfo },
+      {
+        runValidators: true,
+      }
+    );
+    if (!updated) {
+      const err = new Error("document not found");
+      err.name = "DocumentNotFoundError";
+      throw err;
+    }
+    res.status(200).json({
+      message: "user info updated successfully",
+      id: id,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+export const getUserInfoController = async (req, res, next) => {
+  try {
+    await dbConnection();
+    const id = req.id;
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      const err = new Error("document not found");
+      err.name = "DocumentNotFoundError";
+      throw err;
+    }
+    res.status(200).json({
+      message: "user info retrieved successfully",
+      info: {
+        username: user.username,
+      }
+    });
   } catch (err) {
     next(err);
   }

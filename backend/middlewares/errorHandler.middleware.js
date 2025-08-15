@@ -1,5 +1,4 @@
-export const ErrorHandler = (err, _, res, next) => {
-  try {
+export const ErrorHandler = (err, _req, res, _next) => {
     if (err?.code === 11000) {
       res.status(409).json({ message: "Duplicate key entered" });
       return;
@@ -39,9 +38,5 @@ export const ErrorHandler = (err, _, res, next) => {
         res.status(500).json({
           message: "internal server error",
         });
-        break;
     }
-  } catch (err) {
-    next(err);
-  }
 };

@@ -67,8 +67,21 @@ describe("users controller test", () => {
     it("should delete successfully", async () => {
       const user = generateUser();
       const userCreated = await request(app).post("/users/signup").send(user);
-      const response = await request(app).delete("/users").set('Authorization',userCreated.body.accessToken).send(user);
+      const response = await request(app).delete("/users").set('Authorization',userCreated.body.accessToken)
       expect(response.status).toBe(200)
     });
   });
+  describe("update user info",()=>{
+    it('should have another username and password',async ()=>{
+      const oldUserInfo = generateUser()
+      const newUserInfo = generateUser()
+      const {body:{accessToken}}=await request(app).post('/users/signup').send(oldUserInfo)
+      const response = (await request(app).patch('/users').set('Authorization',accessToken).send(newUserInfo))
+      const badLogin = await request(app).post('/users/login').send(oldUserInfo)
+      const goodLogin = await request(app).post('/users/login').send(newUserInfo)
+      expect(response.status).toBe(200)
+      expect(goodLogin.status).toBe(200)
+      expect(badLogin.status).toBe(401)
+    })
+  })
 });

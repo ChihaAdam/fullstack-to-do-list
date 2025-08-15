@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 6,
   },
+  usesDarkmode:{
+    type:Boolean,
+    default:false
+  }
 });
 
 const User = mongoose.model("User", userSchema);

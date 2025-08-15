@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { AlertCircle, Eye, EyeClosed } from "lucide-react";
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import type { userCredentials } from "@/types/types";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -62,8 +62,16 @@ const Login = () => {
           signup
         </Link>
       </div>
-      {error!=null && (
-        <Alert variant='destructive'>
+      <Alert>
+        <AlertCircle />
+        <AlertTitle>to submit your info you must have :</AlertTitle>
+        <AlertDescription className="ml-3">
+          <div>• username between 4 and 16 characters</div>
+          <div>• password at least 6 characters</div>
+        </AlertDescription>
+      </Alert>
+      {error != null && (
+        <Alert variant="destructive">
           <AlertCircle />
           <AlertTitle>{error}</AlertTitle>
         </Alert>

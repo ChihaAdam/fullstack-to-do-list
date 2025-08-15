@@ -12,15 +12,13 @@ export const useAddTodo = (fetchTodos: () => Promise<void>) => {
           Authorization: token,
         },
       });
-      toast('todo has been created .');
+      toast("todo has been created .");
       await fetchTodos();
-      
     } catch (err: any) {
       const status = err.response?.status;
       if (status === 401) setToken(null);
       toast("something went wrong", {
         description: "Please try again.",
-        className: "bg-red-600 text-white border border-red-700",
       });
     }
   }
@@ -47,7 +45,6 @@ export const useUpdateTodo = (id: string) => {
       if (status === 401) setToken(null);
       toast("something went wrong", {
         description: "Please try again.",
-        className: "bg-red-600 text-white border border-red-700",
       });
     }
   }
@@ -74,7 +71,6 @@ export const useCompleteTodo = (id: string) => {
       if (status === 401) setToken(null);
       toast("something went wrong", {
         description: "Please try again.",
-        className: "bg-red-600 text-white border border-red-700",
       });
     }
   }
@@ -97,8 +93,8 @@ export const useDeleteTodo = (id: string) => {
       if (status === 401) setToken(null);
       toast("something went wrong", {
         description: "Please try again.",
-        className: "bg-red-600 text-white border border-red-700",
       });
+      
     }
   }
   return { deleteTodo };

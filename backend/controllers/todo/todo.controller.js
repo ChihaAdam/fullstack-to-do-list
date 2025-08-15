@@ -57,7 +57,6 @@ export const updateTodo = async (req, res, next) => {
       },
       { $set: updates },
       {
-        new: true,
         runValidators: true,
       }
     );
@@ -68,6 +67,7 @@ export const updateTodo = async (req, res, next) => {
     }
     res.status(200).json({
       message: "todo updated successfully",
+      id:id
     });
   } catch (err) {
     next(err);
@@ -85,7 +85,6 @@ export const completeTodo = async (req, res, next) => {
       },
       { $set: { completed: true } },
       {
-        new: true,
         runValidators: true,
       }
     );
@@ -96,7 +95,7 @@ export const completeTodo = async (req, res, next) => {
     }
     res.status(200).json({
       message: "todo updated successfully",
-      id: updated._id.valueOf(),
+      id: id
     });
   } catch (err) {
     next(err);
@@ -118,7 +117,7 @@ export const deleteTodo = async (req, res, next) => {
     }
     res.status(200).json({
       message: "todo deleted successfully",
-      id: deleted._id.valueOf(),
+      id: id
     });
   } catch (err) {
     next(err);

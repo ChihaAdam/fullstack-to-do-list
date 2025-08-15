@@ -153,6 +153,10 @@
                     "message": {
                       "type": "string",
                       "example": "todo updated successfully"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "64d8f9c2e4b1a3f5c8a1d7e2"
                     }
                   }
                 }
@@ -273,7 +277,11 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "todo marked as completed successfully"
+                      "example": "todo completed successfully"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "64d8f9c2e4b1a3f5c8a1d7e2"
                     }
                   }
                 }
@@ -324,6 +332,10 @@
                     "message": {
                       "type": "string",
                       "example": "todo deleted successfully"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "64d8f9c2e4b1a3f5c8a1d7e2"
                     }
                   }
                 }

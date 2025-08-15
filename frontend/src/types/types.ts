@@ -17,3 +17,6 @@ export type TodoRaw={
   title:string;
   description:string
 }
+export type userInfo = {
+  username: string
+}

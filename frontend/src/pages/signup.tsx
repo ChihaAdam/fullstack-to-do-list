@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { AlertCircle, Eye, EyeClosed } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 const Signup = () => {
   const { signup, status, error } = useAuth();
   const [isHidden, setIsHidden] = useState(true);
@@ -62,6 +62,14 @@ const Signup = () => {
           login
         </Link>
       </div>
+      <Alert>
+        <AlertCircle />
+        <AlertTitle>to submit your info you must have :</AlertTitle>
+        <AlertDescription className="ml-3">
+          <div>• username between 4 and 16 characters</div>
+          <div>• password at least 6 characters</div>
+        </AlertDescription>
+      </Alert>
       {error && (
         <Alert variant="destructive">
           <AlertCircle />
